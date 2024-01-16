@@ -1,5 +1,9 @@
 package com.selenium.ecommerce.acceptancetests.navigation;
 
+import com.selenium.ecommerce.actions.MenuBarActions;
+import com.selenium.ecommerce.actions.NavigationActions;
+import com.selenium.ecommerce.actions.PageHeadActions;
+import net.serenitybdd.annotations.Steps;
 import net.serenitybdd.core.annotations.findby.By;
 import net.serenitybdd.core.pages.WebElementFacade;
 import net.serenitybdd.core.steps.UIInteractions;
@@ -7,7 +11,6 @@ import net.serenitybdd.junit5.SerenityJUnit5Extension;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.openqa.selenium.WebDriver;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,17 +20,29 @@ import java.util.Map;
 @ExtendWith(SerenityJUnit5Extension.class)
 //Through extending the UIInteractions class, you don't have to worry about the boilerplate webdriver config code in your tests
 public class MenuBarTest extends UIInteractions {
-    WebDriver driver;
+    //Let Serenity manage the instantiation of navigationAction for me. It'll also manage the driver object life cycles between objects
+    @Steps
+    NavigationActions navigationAction;
+    @Steps
+    MenuBarActions menuBarActions;
+    @Steps
+    private PageHeadActions pageHeadActions;
+
     @Test
     void shouldDisplayTheCorrectTitle(){
-        openUrl("https://magento.softwaretestingboard.com/");
-       String pageTitle = getTitle();
+        // Before refactor: openUrl("https://magento.softwaretestingboard.com/");
+        navigationAction.openTheLumaLandingPage();
+
+       // Before refactor: String pageTitle = getTitle();
+        String pageTitle = pageHeadActions.pageTitle();
+
        Assertions.assertThat(pageTitle).isEqualTo("Home Page");
     }
 
     @Test
     void composingSelectorsToGrabAllTopLevelMenuItems() {
-        openUrl("https://magento.softwaretestingboard.com/");
+        //Before refactor: openUrl("https://magento.softwaretestingboard.com/");
+        navigationAction.openTheLumaLandingPage();;
 
         //Yields all elements that have css class called .level-top
         List<WebElementFacade> allTopLevels = findAll(By.cssSelector(".level-top"));
@@ -78,11 +93,13 @@ public class MenuBarTest extends UIInteractions {
 
     @Test
     void shouldShowTopLevelMenuItems() {
-        openUrl("https://magento.softwaretestingboard.com/");
+        //Before refactor: openUrl("https://magento.softwaretestingboard.com/");
+        navigationAction.openTheLumaLandingPage();
 
         //Using a previously tested selector (on dev tools and thro the previous test in detail)
         //.texts() is a convenient method from serenitybdd-core lib. Allows you to skip looping thro the elements in the List.
-        List<String> allTopMenuItems = findAll(By.cssSelector("a.level-top")).texts();
+        //Before refactor: List<String> allTopMenuItems = findAll(By.cssSelector("a.level-top")).texts();
+        List<String> allTopMenuItems = menuBarActions.textOfTopLevelMenuItems();
 
         Assertions.assertThat(allTopMenuItems).containsExactly("What's New","Women", "Men", "Gear", "Training", "Sale");
     }
