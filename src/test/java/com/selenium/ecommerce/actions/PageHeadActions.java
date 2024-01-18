@@ -10,4 +10,6 @@ public class PageHeadActions extends UIInteractions {
     public String pageTitle(){
         return getTitle();
     }
+
+
 }
