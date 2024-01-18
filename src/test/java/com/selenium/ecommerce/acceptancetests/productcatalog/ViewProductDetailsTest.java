@@ -2,7 +2,7 @@ package com.selenium.ecommerce.acceptancetests.productcatalog;
 
 import com.selenium.ecommerce.actions.NavigationActions;
 import com.selenium.ecommerce.actions.PageHeadActions;
-import com.selenium.ecommerce.actions.ProductActions;
+import com.selenium.ecommerce.actions.ProductDetailsActions;
 import com.selenium.ecommerce.actions.ProductCatalogActions;
 import net.serenitybdd.core.steps.UIInteractions;
 import net.serenitybdd.junit5.SerenityJUnit5Extension;
@@ -15,7 +15,7 @@ public class ViewProductDetailsTest extends UIInteractions {
     NavigationActions navigate;
     private PageHeadActions productDetail;
     private ProductCatalogActions productCatalog;
-    private ProductActions productActions;
+    private ProductDetailsActions productDetailsActions;
     private String productName = "Radiant Tee";
 
     @Test
@@ -27,6 +27,6 @@ public class ViewProductDetailsTest extends UIInteractions {
         Assertions.assertThat(productDetail.pageTitle()).isEqualTo(productName);
 
         //Assert on the heading showing on the body of the page
-        Assertions.assertThat(productActions.productHeadingOnPage()).isEqualTo(productName);
+        Assertions.assertThat(productDetailsActions.productHeadingOnPage()).isEqualTo(productName);
     }
 }
