@@ -27,9 +27,5 @@ public class SubscribeToMailingListTest {
         Assertions.assertThat(pageHeadActions.pageTitle()).isEqualTo("Subscribe - Software Testing Board");
 
         subscribeActions.fillOutAndSubmitSubscriptionForm();
-
-/*   //Revisit and get the assertion to work with appropriate waiting startegy
-        String expectedAfterSubscriptionText = "Almost finished... We need to confirm your email address. To complete the subscription process, please click the link in the email we just sent you.";
-        Assertions.assertThat(subscribeActions.afterSubscriptionText()).isEqualTo(expectedAfterSubscriptionText);*/
     }
 }
