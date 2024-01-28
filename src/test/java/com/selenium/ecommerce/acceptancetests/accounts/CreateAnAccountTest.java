@@ -3,6 +3,7 @@ package com.selenium.ecommerce.acceptancetests.accounts;
 import com.selenium.ecommerce.actions.RegisterAccountActions;
 import net.serenitybdd.core.steps.UIInteractions;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 public class CreateAnAccountTest extends UIInteractions {
@@ -13,10 +14,10 @@ public class CreateAnAccountTest extends UIInteractions {
     public void shouldCreateANewAccount(){
         registerAccount.registerAccountFor("Successful Account", "User", generateUniqueEmail(), "Complex143@password");
 
-        //        String successMessage = find(By.cssSelector(".message-success")).getText();
-        //        Assertions.assertThat(successMessage).isEqualTo(expectedSuccessMessage);
         String expectedSuccessMessage = "Thank you for registering with Main Website Store.";
         waitForTextToAppear(expectedSuccessMessage);
+        //   String successMessage = find(By.cssSelector(".message-success")).getText();
+        //   Assertions.assertThat(successMessage).isEqualTo(expectedSuccessMessage);
     }
 
     @Test
@@ -27,12 +28,17 @@ public class CreateAnAccountTest extends UIInteractions {
          String password = "Complex143@password";
 
          registerAccount.registerAccountFor(firstName, lastName, email, password);
-
          login.logout();
+
          login.loginAsUserWith(email, password);
-        waitForTextToAppear("Welcome, " + firstName + " " + lastName + "!");
+         waitForTextToAppear("Welcome, " + firstName + " " + lastName + "!");
     }
     public String generateUniqueEmail(){
        return "test.user+" +System.currentTimeMillis() +"@popularEmailService.com";
+    }
+
+    @AfterEach
+    public void tearDown(){
+        login.logout();
     }
 }
