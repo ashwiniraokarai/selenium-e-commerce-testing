@@ -18,6 +18,7 @@ public class LoginActions extends UIInteractions {
         find(By.cssSelector("button#send2")).click();
     }
 
+    @Step("Sign out")
     public void logout(){
         find(By.cssSelector("button[data-action='customer-menu-toggle']")).click();
         find(By.linkText("Sign Out")).click();
