@@ -51,16 +51,38 @@ public class DisplayItemsInTheCartTest extends UIInteractions {
         hotSellersSectionComponent.selectHotSellerItemImageWith(productTitle);
         Assertions.assertThat(productDetailsPage.textOfProductTitle()).isEqualTo(productTitle);
 
+        productDetailsPage.chooseProductFeatures("XS", "Yellow");
         productDetailsPage.addProductToCart();
         shoppingCartComponent.waitForCartIconToUpdateCount();
         shoppingCartComponent.showCartSummary();
 
-        Assertions.assertThat(shoppingCartComponent.productTitleInMiniCart()).isEqualTo(productTitle);
+ /*   //Assertion refactored to work with List of Strings returned by the scaled method that returned a single String
+        Assertions.assertThat(shoppingCartComponent.itemsInMiniCart()).isEqualTo(productTitle);
+*/
+        Assertions.assertThat(shoppingCartComponent.itemsInMiniCart()).contains(productTitle);
     }
 
     //"Scaled" version of the above Test
     @Test
     public void canAddMultipleItemsToShoppingCart(){
+        String productTitleOne = "Breathe-Easy Tank";
+        String productTitleTwo = "Radiant Tee";
 
+        lumaHomePage.openPage();
+        hotSellersSectionComponent.selectHotSellerItemImageWith(productTitleOne);
+        Assertions.assertThat(productDetailsPage.textOfProductTitle()).isEqualTo(productTitleOne);
+        productDetailsPage.chooseProductFeatures("XS", "Yellow");
+        productDetailsPage.addProductToCart();
+
+        lumaHomePage.openPage();
+        hotSellersSectionComponent.selectHotSellerItemImageWith(productTitleTwo);
+        Assertions.assertThat(productDetailsPage.textOfProductTitle()).isEqualTo(productTitleTwo);
+        productDetailsPage.chooseProductFeatures("S", "Orange");
+        productDetailsPage.addProductToCart();
+
+        shoppingCartComponent.waitForCartIconToUpdateCount();
+        shoppingCartComponent.showCartSummary();
+
+        Assertions.assertThat(shoppingCartComponent.itemsInMiniCart()).contains(productTitleOne, productTitleTwo);
     }
 }
