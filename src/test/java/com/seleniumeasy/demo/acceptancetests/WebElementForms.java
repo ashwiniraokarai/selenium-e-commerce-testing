@@ -1,11 +1,14 @@
 package com.seleniumeasy.demo.acceptancetests;
 
 import com.seleniumeasy.demo.pageobjects.CheckboxForm;
+import com.seleniumeasy.demo.pageobjects.RadioButtonForm;
 import com.seleniumeasy.demo.pageobjects.SingleInputFieldForm;
 import com.seleniumeasy.demo.pageobjects.TwoInputFieldsForm;
 import net.serenitybdd.annotations.Managed;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.openqa.selenium.WebDriver;
 
 import java.util.ArrayList;
@@ -20,6 +23,7 @@ public class WebElementForms {
     WebDriver driver;
     private TwoInputFieldsForm twoInputFieldsForm;
     private CheckboxForm checkboxForm;
+    private RadioButtonForm radioButtonForm;
 
     /*
     * Single Input Field:
@@ -99,5 +103,33 @@ public class WebElementForms {
         Assertions.assertThat(checkboxForm.checkBoxStateOf("Option 2")).isTrue();
         Assertions.assertThat(checkboxForm.checkBoxStateOf("Option 3")).isTrue();
         Assertions.assertThat(checkboxForm.checkBoxStateOf("Option 4")).isTrue();*/
+    }
+
+    /*
+     * Radio Button and a Submit button that produces a feedback of your Selection
+     * Select a Radio Button in the Radio Button Group
+     * Submit
+     * Validate the feedback message
+     * */
+    @ParameterizedTest(name="Select {0}")
+    @CsvSource({
+            "Male",
+            "Female"
+    })
+    public void canSelectARadioButton(String selection){
+        radioButtonForm.openRadioButtonFormPage();
+        radioButtonForm.selectSimpleRadioButtonWithValue(selection);
+        radioButtonForm.submit();
+
+        Assertions.assertThat(radioButtonForm.textOfDisplayedMessage()).isEqualTo("Radio button '"+selection+"' is checked");
+    }
+
+    /*
+     * Radio Button at Level One (gender), then another one at Level Two (age group)
+     * Submit and Validate the Feedback Message
+     * */
+    @Test
+    public void canSelectRadioButtonsAtNestedLevels(){
+
     }
 }
