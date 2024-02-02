@@ -1,9 +1,6 @@
 package com.seleniumeasy.demo.acceptancetests;
 
-import com.seleniumeasy.demo.pageobjects.CheckboxForm;
-import com.seleniumeasy.demo.pageobjects.RadioButtonForm;
-import com.seleniumeasy.demo.pageobjects.SingleInputFieldForm;
-import com.seleniumeasy.demo.pageobjects.TwoInputFieldsForm;
+import com.seleniumeasy.demo.pageobjects.*;
 import net.serenitybdd.annotations.Managed;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -11,6 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.openqa.selenium.WebDriver;
 
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -24,6 +22,7 @@ public class WebElementForms {
     private TwoInputFieldsForm twoInputFieldsForm;
     private CheckboxForm checkboxForm;
     private RadioButtonForm radioButtonForm;
+    private RadioButtonGroupsForm radioButtonGroupsForm;
 
     /*
     * Single Input Field:
@@ -125,11 +124,25 @@ public class WebElementForms {
     }
 
     /*
-     * Radio Button at Level One (gender), then another one at Level Two (age group)
-     * Submit and Validate the Feedback Message
+     * Radio Button from one Radio Group (gender), then another one on a different Radio Group (age group)
+     * Submit and Validate the Feedback Message using Chained Assertion
+     * The highlight in the test is the chained Assertion technique
+     * The highlight in the Page Class is the single selector method parameterized to cater to both radio button groups
      * */
-    @Test
-    public void canSelectRadioButtonsAtNestedLevels(){
+    @ParameterizedTest(name = "Select {0}: {1}")
+    @CsvSource({
+            "Male, 0 - 5",
+            "Female, 15 - 50",
+            "Female, 5 - 15"
+    })
+    public void canSelectRadioButtonsOnSeparateGroups(String choiceOfGender, String  choiceOfAgeGroup){
+        radioButtonGroupsForm.openRadioButtonFormPage();
+        radioButtonGroupsForm.selectGenderRadioButtonWithValue(choiceOfGender);
+        radioButtonGroupsForm.selectAgeGroupRadioButtonWithValue(choiceOfAgeGroup);
+        radioButtonGroupsForm.submit();
 
+        Assertions.assertThat(radioButtonGroupsForm.textOfDisplayedMessageForGender())
+                .contains(choiceOfGender)
+                .contains(choiceOfAgeGroup);
     }
 }
