@@ -8,6 +8,10 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import static java.lang.Integer.parseInt;
 
 public class WebElementForms {
@@ -71,16 +75,29 @@ public class WebElementForms {
     @Test
     public void canDetermineCheckBoxStateAndSelectMultipleCheckBoxes(){
         checkboxForm.openCheckBoxFormPage();
+
+        /*    //Assertion refactored to write DRY code using Assertj's allMatch() method
         Assertions.assertThat(checkboxForm.checkBoxStateOf("Option 1")).isFalse();
         Assertions.assertThat(checkboxForm.checkBoxStateOf("Option 2")).isFalse();
         Assertions.assertThat(checkboxForm.checkBoxStateOf("Option 3")).isFalse();
-        Assertions.assertThat(checkboxForm.checkBoxStateOf("Option 4")).isFalse();
+        Assertions.assertThat(checkboxForm.checkBoxStateOf("Option 4")).isFalse();*/
+
+        List<String> ALL_THE_CHECKBOX_LOCATING_TEXT = new ArrayList<String>();
+        Collections.addAll(ALL_THE_CHECKBOX_LOCATING_TEXT, "Option 1", "Option 2", "Option 3", "Option 4");
+
+        Assertions.assertThat(ALL_THE_CHECKBOX_LOCATING_TEXT).allMatch(
+                option -> !checkboxForm.checkBoxStateOf(option)
+        );
 
         checkboxForm.submitFormToCheckAllBoxes();
 
-        Assertions.assertThat(checkboxForm.checkBoxStateOf("Option 1")).isTrue();
+        Assertions.assertThat(ALL_THE_CHECKBOX_LOCATING_TEXT).allMatch(
+                option -> checkboxForm.checkBoxStateOf(option)
+        );
+
+     /*   Assertions.assertThat(checkboxForm.checkBoxStateOf("Option 1")).isTrue();
         Assertions.assertThat(checkboxForm.checkBoxStateOf("Option 2")).isTrue();
         Assertions.assertThat(checkboxForm.checkBoxStateOf("Option 3")).isTrue();
-        Assertions.assertThat(checkboxForm.checkBoxStateOf("Option 4")).isTrue();
+        Assertions.assertThat(checkboxForm.checkBoxStateOf("Option 4")).isTrue();*/
     }
 }
