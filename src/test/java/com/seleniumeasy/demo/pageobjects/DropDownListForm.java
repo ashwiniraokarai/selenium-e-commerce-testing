@@ -28,8 +28,8 @@ public class DropDownListForm extends PageObject {
 
     //For multi-select drop down list
     //Note: argument is flex to receive as many Strings as sent over or even a String Array
-    public void selectStatesFromMultiSelectDropDown(String...strings) {
-        for(String state : strings){
+    public void selectStatesFromMultiSelectDropDown(String...states) {
+        for(String state : states){
             selectStatesMultiSelectDropdownList.selectByValue(state);
         }
     }
