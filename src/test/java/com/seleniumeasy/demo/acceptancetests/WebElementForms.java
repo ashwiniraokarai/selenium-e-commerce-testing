@@ -23,6 +23,7 @@ public class WebElementForms  {
     private RadioButtonForm radioButtonForm;
     private RadioButtonGroupsForm radioButtonGroupsForm;
     private DropDownListForm dropDownListForm;
+    private HoverForm hoverForm;
 
     /*
     * Single Input Field:
@@ -170,5 +171,14 @@ public class WebElementForms  {
         Assertions.assertThat(dropDownListForm.currentSelectionsOnDropDownList()).isEmpty();
         dropDownListForm.selectStatesFromMultiSelectDropDown("California", "New York", "Ohio");
         Assertions.assertThat(dropDownListForm.currentSelectionsOnDropDownList()).containsExactlyInAnyOrder("California", "New York", "Ohio");
+    }
+
+    @Test
+    public void canHoverOverHoverableElements(){
+        hoverForm.openHoverFormPage();
+        hoverForm.hoverOverElement(1);
+
+        hoverForm.captionForImage(1).shouldBeVisible();
+        hoverForm.captionForImage(1).shouldContainText("user1");
     }
 }
