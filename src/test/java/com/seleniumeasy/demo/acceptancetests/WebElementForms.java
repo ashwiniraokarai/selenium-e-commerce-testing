@@ -8,14 +8,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.openqa.selenium.WebDriver;
 
-import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import static java.lang.Integer.parseInt;
 
-public class WebElementForms {
+public class WebElementForms  {
     SingleInputFieldForm simpleFormPage;
     @Managed(driver = "chrome")
     WebDriver driver;
@@ -23,6 +22,7 @@ public class WebElementForms {
     private CheckboxForm checkboxForm;
     private RadioButtonForm radioButtonForm;
     private RadioButtonGroupsForm radioButtonGroupsForm;
+    private DropDownListForm dropDownListForm;
 
     /*
     * Single Input Field:
@@ -144,5 +144,31 @@ public class WebElementForms {
         Assertions.assertThat(radioButtonGroupsForm.textOfDisplayedMessageForGender())
                 .contains(choiceOfGender)
                 .contains(choiceOfAgeGroup);
+    }
+
+    /*
+    * Single-select drop down list
+    * Select a single value
+    * Validation Highlight: Check current selection before and after making selection
+    * */
+    @Test
+    public void canSelectAValueFromDropDownList() {
+        dropDownListForm.openDropDownListFormPage();
+        Assertions.assertThat(dropDownListForm.currentSelectionOnDropDownList()).isEmpty();
+        dropDownListForm.selectADayFromSingleSelectDropDown("Sunday");
+        Assertions.assertThat(dropDownListForm.currentSelectionOnDropDownList()).isEqualTo("Sunday");
+    }
+
+    /*
+     * Multi-select drop down list
+     * Select multiple values. Highlight: method is designed to accept any number of Strings and then looped to run through the selectByValue method
+     * Check current selections before and after making selections
+     * */
+    @Test
+    public void canSelectMultipleValuesFromDropDownList(){
+        dropDownListForm.openDropDownListFormPage();
+        Assertions.assertThat(dropDownListForm.currentSelectionsOnDropDownList()).isEmpty();
+        dropDownListForm.selectStatesFromMultiSelectDropDown("California", "New York", "Ohio");
+        Assertions.assertThat(dropDownListForm.currentSelectionsOnDropDownList()).containsExactlyInAnyOrder("California", "New York", "Ohio");
     }
 }
