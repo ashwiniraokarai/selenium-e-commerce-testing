@@ -4,6 +4,8 @@ import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.core.pages.WebElementFacade;
 import org.openqa.selenium.support.FindBy;
 
+import java.time.Duration;
+
 public class AlertPage extends PageObject {
     @FindBy(css = ".alert-autocloseable-success")
     public WebElementFacade autoCloseableAlertBox;
@@ -23,5 +25,10 @@ public class AlertPage extends PageObject {
 
     public void waitForMessageToDisappear(String expectedAlertMessage) {
             waitForTextToDisappear(expectedAlertMessage);
+    }
+
+    public void waitForMessageToDisappearUsingProgrammaticFluentWait(String expectedAlertMessage) {
+        withTimeoutOf(Duration.ofSeconds(10))
+                .waitForTextToDisappear(expectedAlertMessage, 10000);
     }
 }
