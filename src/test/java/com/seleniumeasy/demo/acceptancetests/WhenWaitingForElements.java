@@ -1,11 +1,11 @@
 package com.seleniumeasy.demo.acceptancetests;
 
 import com.seleniumeasy.demo.pageobjects.AlertPage;
+import com.seleniumeasy.demo.pageobjects.GetNewUserLoadingIconPage;
 import com.seleniumeasy.demo.pageobjects.ModalDialogPage;
 import net.serenitybdd.annotations.Managed;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 
 public class WhenWaitingForElements {
@@ -13,12 +13,13 @@ public class WhenWaitingForElements {
     WebDriver driver;
     private ModalDialogPage modalDialogPage;
     private AlertPage alertPage;
+    private GetNewUserLoadingIconPage getNewUserLoadingIconPage;
 
     /*
-    * Relies Implicit Wait set to 2000ms in Serenity
+    * Relies on "Implicit Wait" set to the default timeout (2000ms) in Serenity
     * */
     @Test
-    public void waitingForAModalDialog(){
+    public void waitForAModalDialog(){
         modalDialogPage.openModalDialogPage();
 
         modalDialogPage.saveChangesButton().shouldNotBeVisible();
@@ -39,10 +40,11 @@ public class WhenWaitingForElements {
     }
 
     /*
-     * Relies on Fluent Wait configuration
+     * Relies on Fluent Wait configuration set to 6000ms in the conf file
+     * aka "Preconfigured Fluent Wait"
      * */
     @Test
-    public void waitingForAnAlertToDisappear(){
+    public void waitForAnAlertToDisappear(){
         String expectedAlertMessage = "I'm an autocloseable success message.";
 
         alertPage.openAlertPage();
@@ -55,14 +57,15 @@ public class WhenWaitingForElements {
         //wait for five seconds
         alertPage.waitForMessageToDisappear(expectedAlertMessage);
 
-    /*        You can no longer assert on the text because the text is gone after the box auto-closes'
-        So we employ the element invisibility as a state indicator technique  to validate*/
+        /* You can no longer assert on the text because the text is gone after the box auto-closes'
+        * So we employ the element invisibility as a state indicator technique  to validate*/
         alertPage.autoCloseableAlertBox.shouldNotBeVisible();
     }
 
     /*
-      Same test/ logic as above but Fluent wait time is code on the fly in the code
-     * */
+     *Same test/ logic as above but Fluent wait time is set on the fly in the code
+     * aka "Programmatic Fluent Wait"
+     */
     @Test
     public void waitingForAnAlertToDisappearUsingProgrammaticFluentWait(){
         String expectedAlertMessage = "I'm an autocloseable success message.";
@@ -80,8 +83,28 @@ public class WhenWaitingForElements {
         //wait for 10 seconds using on-the-fly Fluent Wait time technique
         alertPage.waitForMessageToDisappearUsingProgrammaticFluentWait(expectedAlertMessage);
 
-    /*        You can no longer assert on the text because the text is gone after the box auto-closes'
-        So we employ the element invisibility as a state indicator technique  to validate*/
+        /* You can no longer assert on the text because the text is gone after the box auto-closes'
+            So we employ the element invisibility as a state indicator technique  to validate*/
         alertPage.autoCloseableAlertBox.shouldNotBeVisible();
+    }
+
+    /*
+    * Relies on "Explicit Wait" using Expected Conditions
+    * */
+    @Test
+    public void waitForLoadingIconToDisappear(){
+        getNewUserLoadingIconPage.openNewUserLoadingIconPage();
+
+        getNewUserLoadingIconPage.openNewUserDetails();
+
+        //Check that loading "state" has begun to show on the page
+        Assertions.assertThat(getNewUserLoadingIconPage.userDetailsPane()).contains("loading...");
+
+        //wait for user details to load
+        getNewUserLoadingIconPage.waitForLoadingStateToDisappear();
+
+        Assertions.assertThat(getNewUserLoadingIconPage.userDetailsPane())
+                .contains("First Name : ")
+                .contains("Last Name : ");
     }
 }
