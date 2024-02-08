@@ -92,7 +92,7 @@ public class WhenWaitingForElements {
     * Relies on "Explicit Wait" using Expected Conditions
     * */
     @Test
-    public void waitForLoadingIconToDisappear(){
+    public void waitForSpinnerToDisappear(){
         getNewUserLoadingIconPage.openNewUserLoadingIconPage();
 
         getNewUserLoadingIconPage.openNewUserDetails();

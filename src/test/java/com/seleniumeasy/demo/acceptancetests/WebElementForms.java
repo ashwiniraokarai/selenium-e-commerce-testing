@@ -15,9 +15,9 @@ import java.util.List;
 import static java.lang.Integer.parseInt;
 
 public class WebElementForms  {
-    SingleInputFieldForm simpleFormPage;
     @Managed(driver = "chrome")
     WebDriver driver;
+    private SingleInputFieldForm simpleFormPage;
     private TwoInputFieldsForm twoInputFieldsForm;
     private CheckboxForm checkboxForm;
     private RadioButtonForm radioButtonForm;
