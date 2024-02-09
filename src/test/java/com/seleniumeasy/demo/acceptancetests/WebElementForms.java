@@ -2,8 +2,11 @@ package com.seleniumeasy.demo.acceptancetests;
 
 import com.seleniumeasy.demo.pageobjects.*;
 import net.serenitybdd.annotations.Managed;
+import net.serenitybdd.core.steps.UIInteractions;
+import net.serenitybdd.junit5.SerenityJUnit5Extension;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.openqa.selenium.WebDriver;
@@ -14,7 +17,8 @@ import java.util.List;
 
 import static java.lang.Integer.parseInt;
 
-public class WebElementForms  {
+@ExtendWith(SerenityJUnit5Extension.class)
+public class WebElementForms extends UIInteractions {
     @Managed(driver = "chrome")
     WebDriver driver;
     private SingleInputFieldForm simpleFormPage;

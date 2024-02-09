@@ -4,11 +4,15 @@ import com.seleniumeasy.demo.pageobjects.AlertPage;
 import com.seleniumeasy.demo.pageobjects.GetNewUserLoadingIconPage;
 import com.seleniumeasy.demo.pageobjects.ModalDialogPage;
 import net.serenitybdd.annotations.Managed;
+import net.serenitybdd.core.steps.UIInteractions;
+import net.serenitybdd.junit5.SerenityJUnit5Extension;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
 
-public class WhenWaitingForElements {
+@ExtendWith(SerenityJUnit5Extension.class)
+public class WhenWaitingForElements extends UIInteractions {
     @Managed(driver = "chrome")
     WebDriver driver;
     private ModalDialogPage modalDialogPage;

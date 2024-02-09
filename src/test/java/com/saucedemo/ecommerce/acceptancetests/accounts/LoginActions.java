@@ -2,9 +2,12 @@ package com.saucedemo.ecommerce.acceptancetests.accounts;
 
 import net.serenitybdd.annotations.Step;
 import net.serenitybdd.core.steps.UIInteractions;
+import net.serenitybdd.junit5.SerenityJUnit5Extension;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.By;
 
+@ExtendWith(SerenityJUnit5Extension.class)
 public class LoginActions extends UIInteractions {
     @Step("Login with email {0} and password {1}")
     public void loginAsUserWith(String email, String password){
