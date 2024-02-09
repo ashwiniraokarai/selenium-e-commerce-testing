@@ -6,6 +6,8 @@ import net.serenitybdd.core.steps.UIInteractions;
 import net.serenitybdd.junit5.SerenityJUnit5Extension;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvFileSource;
@@ -15,6 +17,7 @@ import org.openqa.selenium.WebDriver;
 import java.util.stream.Stream;
 
 @ExtendWith(SerenityJUnit5Extension.class)
+@Execution(ExecutionMode.CONCURRENT)
 public class ParameteredTestWithSerenity extends UIInteractions {
 
     @Managed
@@ -53,6 +56,7 @@ public class ParameteredTestWithSerenity extends UIInteractions {
 
     @ParameterizedTest(name = "{0} + {1} = {2}")
     @MethodSource("testData")
+    @Execution(ExecutionMode.CONCURRENT)
     public void canOperateOnInputsFromMethodSource(String numberOne, String numberTwo, Integer expectedTotal){
         twoInputFieldsForm.openSimpleFormPage();
         twoInputFieldsForm.enterNumberForValueOne(numberOne);
