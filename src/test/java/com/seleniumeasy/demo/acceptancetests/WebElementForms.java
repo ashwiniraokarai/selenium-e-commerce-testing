@@ -19,7 +19,7 @@ import static java.lang.Integer.parseInt;
 
 @ExtendWith(SerenityJUnit5Extension.class)
 public class WebElementForms extends UIInteractions {
-    @Managed(driver = "chrome")
+    @Managed
     WebDriver driver;
     private SingleInputFieldForm simpleFormPage;
     private TwoInputFieldsForm twoInputFieldsForm;
