@@ -1,25 +1,29 @@
-# Serenity JUnit Starter project
+# Automated tests for Luma Shopping Store:
+https://docs.google.com/document/d/1ReS63Ml1G9CfbVv-R8YYwPhtBGbtZt5qLKOTAFFMqlc/edit?usp=sharing
 
-Get started quickly with Serenity BDD and JUnit 5 with this simple starter project. 
 
-## Get the code
+# From unstructured to fully organized tests:
+Covers a wide range of selenium features
+basic-tests
+sophisticated-organized-tests
+parameterized-tests
+selectors-textboxes-checkboxes-dropdowns-etc
+test-create-new-account 
+test-add-to-shopping-cart
+interact-with-elements
+assert
+page-object-model
+wait-strategies
+data-driven-tests
+test-on-local-grid-server
+cross-browser-testing
+parallel-testing
+test-on-saucelabs
 
-Click on the [Use This Template button](https://github.com/serenity-bdd/serenity-junit-starter/generate) to create a new project in your own Github account. 
 
-Or simply [download a zip](https://github.com/serenity-bdd/serenity-junit-starter/archive/master.zip) file.
+# Link to walkthro doc:
+https://docs.google.com/document/d/1ReS63Ml1G9CfbVv-R8YYwPhtBGbtZt5qLKOTAFFMqlc/edit?usp=sharing
 
-## Running the tests under Maven
 
-The template project comes with both Maven and Gradle build scripts. To run the tests with Maven, open a command window and run:
+Repo generated from (https://github.com/serenity-bdd/serenity-junit-starter)
 
-  ./mvnw clean verify
-
-## Use Gradle
-
-For GRADLE, pen a command window and run:
-
-  ./gradlew test 
-
-## Viewing the reports
-
-Both of the commands provided above will produce a Serenity test report in the `target/site/serenity` directory. Go take a look!
